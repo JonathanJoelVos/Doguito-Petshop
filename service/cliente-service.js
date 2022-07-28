@@ -45,8 +45,40 @@ const cadastraCliente = (nome, email) => {
     }); */
 }
 
+const deletaCliente = (id) => {
+    return fetch(`http://localhost:3000/profile/${id}`, {
+        method: "DELETE"
+    })
+}
+
+const pegarId = (id) => {
+    return fetch(`http://localhost:3000/profile/${id}`)
+        .then(resposta => {
+            return resposta.json()
+        })
+}
+
+const atulizaCliente = (id, nome, email) => {
+    return fetch(`http://localhost:3000/profile/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            nome: nome,
+            email: email
+        })
+    })
+    /*  .then((r) => {
+         return r.json()
+     }) */
+}
+
 export const servidorClientes = {
     listaDeClientes,
-    cadastraCliente
+    cadastraCliente,
+    deletaCliente,
+    pegarId,
+    atulizaCliente
 }
 

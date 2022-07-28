@@ -1,25 +1,39 @@
 import { servidorClientes } from "../service/cliente-service.js";
 
 const tbody = document.querySelector("[data-tabela]");
-function criaLinha(nome, email) {
+function criaLinha(nome, email, id) {
     const tr = document.createElement("tr");
     const conteudo = ` 
         <td class="td" data-td>${nome}</td>
         <td>${email}</td>
         <td>
             <ul class="tabela__botoes-controle">
-                <li><a href="../telas/edita_cliente.html" class="botao-simples botao-simples--editar">Editar</a></li>
+                <li><a href="../telas/edita_cliente.html?id=${id}" class="botao-simples botao-simples--editar">Editar</a></li>
                 <li><button class="botao-simples botao-simples--excluir" type="button">Excluir</button></li>
             </ul>
         </td>`
     tr.innerHTML = conteudo;
-
+    tr.dataset.id = id;
     return tr;
 }
+
+tbody.addEventListener("click", (event) => {
+    let botao = event.target.className === "botao-simples botao-simples--excluir";
+    if (botao) {
+        const linha = event.target.closest('[data-id]');
+        let id = linha.dataset.id;
+        servidorClientes.deletaCliente(id)
+            .then(() => {
+                linha.remove()
+            })
+    }
+})
+
+
 
 servidorClientes.listaDeClientes()
     .then(valor => {
         valor.forEach(element => {
-            tbody.appendChild(criaLinha(element.nome, element.email));
+            tbody.appendChild(criaLinha(element.nome, element.email, element.id));
         })
     })
