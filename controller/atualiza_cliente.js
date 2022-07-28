@@ -18,10 +18,16 @@ import { servidorClientes } from "../service/cliente-service.js";
 
         const form = document.querySelector('[data-form]');
         form.addEventListener("submit", async (event) => {
-            event.preventDefault();
+            try {
+                event.preventDefault();
 
-            await servidorClientes.atulizaCliente(idUrl, inputName.value, inputEmail.value)
-            window.location.href = '../telas/edicao_concluida.html'
+                await servidorClientes.atulizaCliente(idUrl, inputName.value, inputEmail.value)
+                window.location.href = '../telas/edicao_concluida.html'
+            }
+            catch (error) {
+                console.log(error);
+                window.location.href = '../telas/erro.html';
+            }
 
         })
     }

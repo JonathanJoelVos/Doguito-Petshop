@@ -55,12 +55,12 @@ const deletaCliente = (id) => {
     return fetch(`http://localhost:3000/profile/${id}`, {
         method: "DELETE"
     })
-        .then(resposta => {
+        /* .then(resposta => {
             if (resposta.ok) {
                 resposta => resposta
             }
             throw new Error("Não foi possivel deletar o Cliente!")
-        })
+        }) */
 }
 
 const pegarId = (id) => {
@@ -85,7 +85,7 @@ const atulizaCliente = (id, nome, email) => {
         })
     })
         .then((r) => {
-            if (resposta.ok) {
+            if (r.ok) {
                 return r.json()
             }
             throw new Error("Não foi possivel atualizar a lista de Clientes!")

@@ -4,7 +4,6 @@ const formulario = document.querySelector("[data-form]");
 
 formulario.addEventListener("submit", async (event) => {
     try {
-
         event.preventDefault()
 
         let nome = event.target.querySelector("[data-nome]").value;
