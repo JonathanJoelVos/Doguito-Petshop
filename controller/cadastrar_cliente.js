@@ -2,16 +2,21 @@ import { servidorClientes } from "../service/cliente-service.js";
 
 const formulario = document.querySelector("[data-form]");
 
-formulario.addEventListener("submit", (event) => {
-    event.preventDefault()
+formulario.addEventListener("submit", async (event) => {
+    try {
 
-    let nome = event.target.querySelector("[data-nome]").value;
-    let email = event.target.querySelector("[data-email]").value;
+        event.preventDefault()
 
-    console.log(nome, email)
+        let nome = event.target.querySelector("[data-nome]").value;
+        let email = event.target.querySelector("[data-email]").value;
 
-    servidorClientes.cadastraCliente(nome, email)
-        .then(() => {
-            window.location.href = "../telas/cadastro_concluido.html"
-        })
+        console.log(nome, email)
+
+        await servidorClientes.cadastraCliente(nome, email)
+        window.location.href = "../telas/cadastro_concluido.html"
+    }
+    catch (error) {
+        console.log(error);
+        window.location.href = '../telas/erro.html';
+    }
 })

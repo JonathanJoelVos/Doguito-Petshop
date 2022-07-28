@@ -17,23 +17,34 @@ function criaLinha(nome, email, id) {
     return tr;
 }
 
-tbody.addEventListener("click", (event) => {
+tbody.addEventListener("click", async (event) => {
     let botao = event.target.className === "botao-simples botao-simples--excluir";
     if (botao) {
-        const linha = event.target.closest('[data-id]');
-        let id = linha.dataset.id;
-        servidorClientes.deletaCliente(id)
-            .then(() => {
-                linha.remove()
-            })
+        try {
+            const linha = event.target.closest('[data-id]');
+            let id = linha.dataset.id;
+            await servidorClientes.deletaCliente(id)
+            linha.remove()
+        }
+        catch (error) {
+            console.log(error);
+            window.location.href = '../telas/erro.html'
+        }
     }
 })
 
 
-
-servidorClientes.listaDeClientes()
-    .then(valor => {
-        valor.forEach(element => {
+const render = async () => {
+    try {
+        const clientesServidor = await servidorClientes.listaDeClientes();
+        clientesServidor.forEach(element => {
             tbody.appendChild(criaLinha(element.nome, element.email, element.id));
         })
-    })
+    }
+    catch (error) {
+        console.log(error);
+        window.location.href = '../telas/erro.html'
+    }
+}
+
+render()

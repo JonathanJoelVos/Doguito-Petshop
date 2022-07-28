@@ -25,7 +25,10 @@
 const listaDeClientes = () => {
     return fetch(`http://localhost:3000/profile`)
         .then(resposta => {
-            return resposta.json()
+            if (resposta.ok) {
+                return resposta.json()
+            }
+            throw new Error("Não foi possivel carregar a lista de Clientes!")
         })
 }
 
@@ -40,21 +43,33 @@ const cadastraCliente = (nome, email) => {
             email: email
         })
     })
-    /* .then(resposta => {
-        return resposta.body
-    }); */
+        .then(resposta => {
+            if (resposta.ok) {
+                return resposta.body
+            }
+            throw new Error("Não foi possivel cadatrar o Cliente!")
+        });
 }
 
 const deletaCliente = (id) => {
     return fetch(`http://localhost:3000/profile/${id}`, {
         method: "DELETE"
     })
+        .then(resposta => {
+            if (resposta.ok) {
+                resposta => resposta
+            }
+            throw new Error("Não foi possivel deletar o Cliente!")
+        })
 }
 
 const pegarId = (id) => {
     return fetch(`http://localhost:3000/profile/${id}`)
         .then(resposta => {
-            return resposta.json()
+            if (resposta.ok) {
+                return resposta.json()
+            }
+            throw new Error("Não foi possivel pegar o id de Clientes!")
         })
 }
 
@@ -69,9 +84,12 @@ const atulizaCliente = (id, nome, email) => {
             email: email
         })
     })
-    /*  .then((r) => {
-         return r.json()
-     }) */
+        .then((r) => {
+            if (resposta.ok) {
+                return r.json()
+            }
+            throw new Error("Não foi possivel atualizar a lista de Clientes!")
+        })
 }
 
 export const servidorClientes = {
